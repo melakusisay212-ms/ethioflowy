@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                             // Bottom bar
-                            Box(Modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
+                            Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
                                 Surface(color = CardWhite, shadowElevation = 8.dp, modifier = Modifier.fillMaxWidth()) {
                                     Row(
                                         modifier = Modifier.fillMaxWidth().navigationBarsPadding()
