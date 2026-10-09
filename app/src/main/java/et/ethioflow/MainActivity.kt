@@ -1,6 +1,7 @@
 package et.ethioflow
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,7 +31,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val repo = (application as EthioFlowApp).repository
+
+        val repo = try {
+            (application as EthioFlowApp).repository
+        } catch (e: Exception) {
+            Log.e("EthioFlow", "Failed to get repository", e)
+            throw e
+        }
 
         setContent {
             EthioFlowTheme {
@@ -38,7 +45,6 @@ class MainActivity : ComponentActivity() {
                 var showAddTask by remember { mutableStateOf(false) }
                 var addTaskDate by remember { mutableStateOf<EthiopianDate?>(null) }
                 var selectedTask by remember { mutableStateOf<Task?>(null) }
-                // Secondary routes from More: projects, notes, goals, finance, journal
                 var secondaryRoute by remember { mutableStateOf<String?>(null) }
 
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -82,7 +88,6 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            // Bottom bar
                             Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
                                 Surface(color = CardWhite, shadowElevation = 8.dp, modifier = Modifier.fillMaxWidth()) {
                                     Row(
